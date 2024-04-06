@@ -13,7 +13,10 @@ def fill_missing_value_in_row_using_pearson(attributes: list, row: list):
     return averages[column_index] + a * b
 
 def fill_missing_value_in_row_using_nearest_neighbors(dc: AbstractDistanceCalculator, dataset: list, row: list):
-    column_index = row.index(None)
-    closest_entry_index = dc.closest_to(dataset, row)
+    missing_column_index = row.index(None)
+    ds_without_missing_column = [[ds_row[i] for i in range(0, len(ds_row)) if i != missing_column_index] for ds_row in dataset]
+    row_without_missing_column = [row[i] for i in range(0, len(row)) if i != missing_column_index]
 
-    return dataset[closest_entry_index][column_index]
+    closest_entry_index = dc.closest_to(ds_without_missing_column, row_without_missing_column)
+
+    return dataset[closest_entry_index][missing_column_index]
