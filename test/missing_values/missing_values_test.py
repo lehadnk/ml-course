@@ -1,5 +1,6 @@
 import unittest
 
+from src.distance.euclid import EuclideanDistanceCalculator
 from src.distance.manhattan import ManhattanDistanceCalculator
 from src.missing_values.missing_values import fill_missing_value_in_row_using_pearson, \
     fill_missing_value_in_row_using_nearest_neighbors

@@ -1,7 +1,7 @@
 import math
 
 from src.math.average import average
-from src.math.deviation import deviation, sq_deviation
+from src.math.deviation import sq_deviation
 
 
 def pearson_correlation_coefficient(vector1: list, vector2: list) -> float:
