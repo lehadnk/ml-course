@@ -1,12 +1,15 @@
+from typing import Optional
+
 from src.graph.dfs import deep_first_search
-from src.graph.graph import Graph
+from src.graph.graph import BidirectionalGraph
 
 
-def clusterize_dfs(graph: Graph, max_distance: float):
-    graph.delete_edges_longer_than(max_distance)
+def clusterize_dfs(graph: BidirectionalGraph, max_distance: Optional[float]):
+    if max_distance is not None:
+        graph.delete_edges_longer_than(max_distance)
 
     clusterized = {}
-    for node_id in graph.nodes:
+    for node_id in graph.get_nodes():
         clusterized[node_id] = False
 
     def first_unclusterized_node_id():

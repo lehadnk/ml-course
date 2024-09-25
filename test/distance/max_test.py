@@ -11,4 +11,4 @@ class ManhattanTest(unittest.TestCase):
         calculator = MaxDistanceCalculator()
         d = calculator.distance_between(point1, point2)
 
-        self.assertEquals(5, d)
+        self.assertEqual(5, d)

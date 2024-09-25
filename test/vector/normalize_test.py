@@ -11,7 +11,7 @@ class NormalizeTest(unittest.TestCase):
 
         normalized = normalize_using_min_max(v)
 
-        self.assertEquals([0.5, 1, 0.75, 0, 0.25], normalized)
+        self.assertEqual([0.5, 1, 0.75, 0, 0.25], normalized)
 
     def test_normalize_using_avg_and_stdev(self):
         v = [3, 5, 4, 1, 2]

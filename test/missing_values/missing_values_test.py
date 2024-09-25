@@ -25,4 +25,4 @@ class MissingValuesTest(unittest.TestCase):
             [2, 5, 3, 5]
         ], [3, 4, 4, None])
 
-        self.assertEquals(4, value)
+        self.assertEqual(4, value)

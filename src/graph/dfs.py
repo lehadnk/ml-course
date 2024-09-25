@@ -1,14 +1,14 @@
 from typing import List
 
-from src.graph.graph import Graph
+from src.graph.graph import BidirectionalGraph
 
 
-def deep_first_search(graph: Graph, start: int) -> List[int]:
+def deep_first_search(graph: BidirectionalGraph, start: int) -> List[int]:
     # Deep First Search Algorithm
     # Returns the list of node ids within the connected graph component
 
     visited = {}
-    for node_id in graph.nodes:
+    for node_id in graph.get_nodes():
         visited[node_id] = False
 
     def dfs_visit(node_id: int):
@@ -16,8 +16,8 @@ def deep_first_search(graph: Graph, start: int) -> List[int]:
 
         edges = graph.get_edges_from(node_id)
         for edge in edges:
-            if not visited[edge.end]:
-                dfs_visit(edge.end)
+            if not visited[edge.n2]:
+                dfs_visit(edge.n2)
 
     dfs_visit(start)
 

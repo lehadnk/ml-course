@@ -11,4 +11,4 @@ class ManhattanTest(unittest.TestCase):
         calculator = ManhattanDistanceCalculator()
         d = calculator.distance_between(point1, point2)
 
-        self.assertEquals(d, 6)
+        self.assertEqual(6, d)

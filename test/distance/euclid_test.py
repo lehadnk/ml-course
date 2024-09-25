@@ -12,4 +12,4 @@ class EuclidTest(unittest.TestCase):
         calculator = EuclideanDistanceCalculator()
         d = calculator.distance_between(point1, point2)
 
-        self.assertAlmostEqual(d, 4.47, 2)
+        self.assertAlmostEqual(4.47, d, 2)
