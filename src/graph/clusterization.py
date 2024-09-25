@@ -2,6 +2,7 @@ from typing import Optional
 
 from src.graph.dfs import deep_first_search
 from src.graph.graph import BidirectionalGraph
+from src.graph.mst.kruskal import kruskal_mst
 
 
 def clusterize_dfs(graph: BidirectionalGraph, max_distance: Optional[float]):
@@ -30,3 +31,11 @@ def clusterize_dfs(graph: BidirectionalGraph, max_distance: Optional[float]):
         node_id = first_unclusterized_node_id()
 
     return clusters
+
+def clusterize_using_mst(graph: BidirectionalGraph, clusters: int):
+    mst = kruskal_mst(graph)
+    mst.edge_list.sort(key=lambda x: x.weight, reverse=True)
+    for i in range(0, clusters - 1):
+        mst.remove_edge(mst.edge_list[0])
+
+    return clusterize_dfs(mst, None)
