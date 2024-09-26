@@ -3,7 +3,7 @@ import unittest
 from src.distance.max import MaxDistanceCalculator
 
 
-class ManhattanTest(unittest.TestCase):
+class MaxTest(unittest.TestCase):
     def test_max_distance(self):
         point1 = [0, 1]
         point2 = [3, 6]
