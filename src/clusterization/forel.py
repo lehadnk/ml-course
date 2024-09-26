@@ -32,13 +32,13 @@ class ForelClusterizator:
         return point
 
     def perform_clustering(self, range: float, distance_calculator: AbstractDistanceCalculator):
-        last_cluster_points = []
-        result = []
+        last_cluster_points, cluster_points, result = [], [], []
         forel = None
         while True:
             if forel is None:
                 forel = self.get_random_point()
 
+            last_cluster_points = cluster_points.copy()
             cluster_points = []
             for i, element in enumerate(self.dataset):
                 if distance_calculator.distance_between(forel, element) <= range:
@@ -49,10 +49,8 @@ class ForelClusterizator:
                 continue
 
             if len(cluster_points) == 0 or len(last_cluster_points) == 0:
-                last_cluster_points = cluster_points.copy()
                 continue
 
-            # if len(last_cluster_points) == len(cluster_points):
             for cluster_point in cluster_points:
                 if cluster_point not in last_cluster_points:
                     # Since the cluster had changed since the last adjustment, we adjust the forel point to the new center of the cluster
@@ -61,7 +59,6 @@ class ForelClusterizator:
                         forel = [x + y for x, y in zip(forel, self.dataset[point])]
 
                     forel = [x / len(cluster_points) for x in forel]
-                    last_cluster_points = cluster_points.copy()
                     continue
 
             cluster = []

@@ -23,4 +23,4 @@ class ClasteringQualityTest(unittest.TestCase):
         self.assertEqual(2, len(quality))
         for q in quality:
             # distance between (0, 0) and (1, 1) is 1.41
-            self.assertAlmostEquals((1.41 * 2) / 3, q, 2)
+            self.assertAlmostEqual((1.41 * 2) / 3, q, 2)

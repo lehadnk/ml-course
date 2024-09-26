@@ -51,8 +51,7 @@ class KmeansClusterizer():
             for i in range(points_count):
                 coordinates = [0] * self.dimensions
                 for point in points_affinity[i]:
-                    for j in range(self.dimensions):
-                        coordinates[j] += point[j]
+                    coordinates = [x + y for x, y in zip(point, coordinates)]
 
                 cluster_centers[i] = [coordinates[i] / len(points_affinity[i]) if len(points_affinity[i]) > 0 else 0 for i in range(points_count)]
 
