@@ -1,7 +1,7 @@
 import unittest
 
 from src.distance.manhattan import ManhattanDistanceCalculator
-from src.graph.clusterization import clusterize_dfs, clusterize_using_mst
+from src.clusterization.graph_clusterization import clusterize_dfs, clusterize_using_mst
 from src.graph.graph import dataset_to_graph
 
 

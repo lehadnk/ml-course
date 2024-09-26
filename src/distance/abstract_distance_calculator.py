@@ -25,7 +25,3 @@ class AbstractDistanceCalculator:
             result.append(distances)
 
         return result
-
-    def distance_sum_to_all(self, dataset: List[List[float]]) -> List[float]:
-        distances = self.distance_to_all(dataset)
-        return [sum(distances) for distances in distances]
