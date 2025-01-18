@@ -45,6 +45,7 @@ class ForelClusterizator:
                     cluster_points.append(i)
 
             if len(cluster_points) == 0:
+                # We invalidate the forel if it missed the cluster
                 forel = None
                 continue
 
