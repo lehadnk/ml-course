@@ -1,10 +1,18 @@
 import numpy as np
-class MoorePenrouseLinearRegression:
-    def __init__(self, data):
-        X = np.array([[1, point[0], point[1]] for point in data])
-        Z = np.array([point[2] for point in data])
 
-        self.coefficients = np.linalg.pinv(X) @ Z
+from src.regression.abstract_regressor import AbstractRegressor
 
-    def predict(self, point):
-        return self.coefficients[0] + sum([point[i - 1] * self.coefficients[i] for i in range(1, len(self.coefficients))])
+
+class MoorePenrouseLinearRegression(AbstractRegressor):
+    def __init__(self):
+        self.b = 0
+        self.w = []
+
+    def fit(self, X, Y):
+        X_with_bias = [[1] + x for x in X]
+        coefficients = np.linalg.pinv(X_with_bias) @ np.array(Y)
+        self.b = coefficients[0]
+        self.w = coefficients[1:]
+
+    def predict(self, X):
+        return self.b + sum(x * w for x, w in zip(self.w, X))

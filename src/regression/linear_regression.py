@@ -1,37 +1,25 @@
-class LinearRegressor:
-    def __init__(self, train_data):
-        num_axes = len(train_data[0])
-        y_axis_number = num_axes - 1
+from src.regression.abstract_regressor import AbstractRegressor
 
-        axis_values = [[] for _ in range(num_axes)]
-        for x in train_data:
-            for i in range(num_axes):
-                axis_values[i].append(x[i])
 
+class LinearRegressor(AbstractRegressor):
+    def __init__(self):
+        self.w = []
+        self.b = 0
+
+    def fit(self, X, Y):
+        num_axes = len(X[0])
+        axis_values = [[x[a] for x in X] for a in range(num_axes)]
         averages = [sum(axis_values[i]) / len(axis_values[i]) for i in range(num_axes)]
-        y_average = averages[y_axis_number]
+        y_average = sum(Y) / len(Y)
 
-        deviations = [[] for i in range(num_axes)]
-        for i in range(num_axes):
-            deviations[i] = [x - averages[i] for x in axis_values[i]]
+        X_deviations = [[x - averages[i] for x in axis_values[i]] for i in range(num_axes)]
+        Y_deviations = [y - y_average for y in Y]
 
-        X_deviations = deviations[:y_axis_number]
-        y_deviations = deviations[y_axis_number]
+        numerators = [sum([X_deviations[i][j] * Y_deviations[j] for j in range(len(X))]) for i in range(num_axes)]
+        denumerators = [sum([X_deviations[i][j] ** 2 for j in range(len(X))]) for i in range(num_axes)]
 
-        numerators = [[] for i in range(num_axes - 1)]
-        for i in range(num_axes - 1):
-            numerators[i] = [X_deviations[i][j] * y_deviations[j] for j in range(len(X_deviations[i]))]
+        self.w = [numerators[i] / denumerators[i] if denumerators[i] != 0 else 0 for i in range(num_axes - 1)]
+        self.b = y_average - sum([self.w[i] * averages[i] for i in range(num_axes - 1)])
 
-        numerators = [sum(numerators[i]) for i in range(num_axes - 1)]
-
-        denumerators = [[] for i in range(num_axes - 1)]
-        for i in range(num_axes - 1):
-            denumerators[i] = [X_deviations[i][j] ** 2 for j in range(len(X_deviations[i]))]
-
-        denumerators = [sum(denumerators[i]) for i in range(num_axes - 1)]
-
-        self.coefficients = [numerators[i] / denumerators[i] if denumerators[i] != 0 else 0 for i in range(num_axes - 1)]
-        self.adjustment = y_average - sum([self.coefficients[i] * averages[i] for i in range(num_axes - 1)])
-
-    def predict(self, point):
-        return self.adjustment + sum([point[i] * self.coefficients[i] for i in range(len(self.coefficients))])
+    def predict(self, X):
+        return sum(w * x for w, x in zip(self.w, X)) + self.b
